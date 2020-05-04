@@ -100,7 +100,6 @@ local function event_timer(x)
         if qk_data[i].type~=nil and qk_data[i].type ~= "n" and qk_data[i].rf ~= 0 then
             --if qk_data[i].type == "box" then
                 if qk_data[i].rft <= 0 then
-                    print(i)
                     qk_data[i]:draw()
                     qk_data[i].rft = qk_data[i].rf
                 elseif x then
