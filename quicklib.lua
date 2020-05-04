@@ -1,4 +1,4 @@
--- oc程序极速开发库0.6 by Bai_Tian
+-- oc程序极速开发库0.7 by Bai_Tian
 local component = require("component")
 local gpu = component.gpu
 local event = require("event")
@@ -39,7 +39,13 @@ function mt_box:draw() -- 绘制函数
         end
     else
         gpu.fill(t.x, t.y, t.dx, t.dy, t.char)
-        gpu.set(t.x, t.y, t.text)
+        if t.text then
+            local ti=1
+            while t.text[ti] do
+                gpu.set(t.text[ti][2]+t.x-1,t.text[ti][3]+t.y-1,t.text[ti][1])
+                ti=ti+1
+            end
+        end
     end
     gpu.setBackground(bk)
     gpu.setForeground(fk)
@@ -60,7 +66,15 @@ function qk_new(t,mt)
 end
 
 function qk_del(id)
+    if type(id)=="table" then
+        local i=1
+        while id[i] do
+            qk_data[id[i]]={type = "n"}
+            i=i+1
+        end
+    else
     qk_data[id]={type = "n"}
+    end
 end
 
 function qk_edit(id,t)
@@ -81,19 +95,18 @@ function qk_hide(id)
 end
 
 local function event_timer(x)
-    for k, v in ipairs(qk_data) do
-        if v.type~=nil and v.type ~= "n" and v.rf ~= 0 then
-            --if v.type == "box" then
-                if v.rft <= 0 then
-                    v:draw()
-                    v.rft = v.rf
-                    return
+    local i=1
+    while qk_data[i] do
+        i=i+1
+        if qk_data[i].type~=nil and qk_data[i].type ~= "n" and qk_data[i].rf ~= 0 then
+            --if qk_data[i].type == "box" then
+                if qk_data[i].rft <= 0 then
+                    qk_data[i]:draw()
+                    qk_data[i].rft = qk_data[i].rf
                 elseif x then
-                    v:draw()
-                    return
+                    qk_data[i]:draw()
                 else
-                    v.rft = v.rft - 0.1
-                    return
+                    qk_data[i].rft = qk_data[i].rft - 0.1
                 end
             --end
         end
