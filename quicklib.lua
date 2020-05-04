@@ -97,10 +97,10 @@ end
 local function event_timer(x)
     local i=1
     while qk_data[i] do
-        i=i+1
         if qk_data[i].type~=nil and qk_data[i].type ~= "n" and qk_data[i].rf ~= 0 then
             --if qk_data[i].type == "box" then
                 if qk_data[i].rft <= 0 then
+                    print(i)
                     qk_data[i]:draw()
                     qk_data[i].rft = qk_data[i].rf
                 elseif x then
@@ -110,6 +110,7 @@ local function event_timer(x)
                 end
             --end
         end
+        i=i+1
     end
 end
 event.timer(0.1, event_timer, math.huge)
