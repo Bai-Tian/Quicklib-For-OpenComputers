@@ -14,7 +14,7 @@
 
 编辑控件：  
 `qk_edit(控件的id:number,要编辑的内容组成的表:table)`
-只会改变x,y,dx,dy,fc,bc,char,rf,text这几种属性  
+只会改变x,y,dx,dy,fc,bc,char,rf,text,pic这几种属性  
 如果想改变其他的属性请看下文`对控件属性进行直接编辑`
 
 隐藏控件：  
