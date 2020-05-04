@@ -35,10 +35,18 @@ char=" "|fill时的字符
 :drop()|释放鼠标激活的函数
 :scroll()|滚动事件激活的函数
 :walk()|行走事件激活的函数
-:dest()|析构函数。当执行`qk_del()`时执行
-关于qk_data表：此表记录着所有创建过的控件，控件的id值即为控件在此表的索引。  
+:dest()|析构函数。当执行`qk_del()`时执行  
+
+###关于qk_data表：
+此表记录着所有创建过的控件，控件的id值即为控件在此表的索引。  
 在使用析构函数时只会把控件的type类型改为"n"，不可直接赋值nil。  
-关于几个默认的函数的详细内容：  
+###关于几个默认的函数的详细内容：  
+默认的析构函数：（把type类型改成"n"代表已被删除的控件，不可直接赋值nil）
+```
+function mt_box:dest()  
+    self = {type = "n"}
+end
+```
 默认的绘制函数：
  ```
  function mt_box:draw() 
@@ -53,9 +61,4 @@ char=" "|fill时的字符
     gpu.setForeground(fk)
 end
 ```
-默认的析构函数：（把type类型改成"n"代表已被删除的控件，不可直接赋值nil）
-```
-function mt_box:dest()  
-    self = {type = "n"}
-end
-```
+
