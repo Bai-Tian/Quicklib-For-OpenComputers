@@ -11,6 +11,11 @@
 `qk_del(控件的id:number)`  
 删除此id的控件。  
 
+编辑控件：  
+`qk_edit(控件的id:number,要编辑的内容组成的表:table)`
+只会改变x,y,dx,dy,fc,bc,char,rf,text这几种属性  
+如果想改变其他的属性请看下文`关于qk_data表`
+
 ## box控件
 `qk_new(包含初始化数据的表:table)`  
 在屏幕上显示一个长方形，返回一个控件id值，当你对控件进行编辑或者删除操作时会用到这个id。  
