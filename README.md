@@ -15,7 +15,7 @@
 编辑控件：  
 `qk_edit(控件的id:number,要编辑的内容组成的表:table)`
 只会改变x,y,dx,dy,fc,bc,char,rf,text这几种属性  
-如果想改变其他的属性请看下文`关于qk_data表`
+如果想改变其他的属性请看下文`对控件属性进行直接编辑`
 
 隐藏控件：  
 `qk_hide(控件的id:number)`  
@@ -40,6 +40,7 @@ text|显示的文本
 fc=0X000000|前景色  
 bc=0XFFFFFF|背景色  
 char=" "|fill时的字符  
+pic |一个表，此表控制着彩色像素的绘制，当此表存在时不会进行普通的长方形绘制
 以下为各种事件函数，不定义则无事发生|-  
 :touch()|点击事件激活的函数  
 :drag()|拖拽事件激活的函数
@@ -54,23 +55,9 @@ modem_msg|判断收到消息的第一个参数是否与此变量相同，缺省�
 :modem(...)|以上条件全部满足后执行此函数。传入的不定参数`...`为接收到的从第二个参数开始到最后的消息  
 
 注意：此网卡事件只能做到简单的判断，复杂需求请自行实现。如果接收到的消息是多个参数，modem_msg只能判断接收到的消息的第一个参数。
-### 关于qk_data表：
-此表记录着所有创建过的控件，控件的id值即为控件在此表的索引。  
+### 对控件属性进行直接编辑：
+表`qk_data`记录着所有创建过的控件，控件的id值即为控件在此表的索引。  
 通过此表可以直接访问或修改控件的属性，例：`qk_data[控件的id][属性名称]`
 在使用`qk_del`删除控件时只会把控件的type类型改为"n"，不可直接赋值nil。  
+### 关于pic表：
 
-### 关于默认的函数的详细内容：  
-默认的绘制函数：
- ```
- function mt_box:draw() 
-    local t=self
-    local bk = gpu.getBackground()
-    local fk = gpu.getForeground()
-    gpu.setBackground(t.bc)
-    gpu.setForeground(t.fc)
-    gpu.fill(t.x, t.y, t.dx, t.dy, t.char)
-    gpu.set(t.x, t.y, t.text)
-    gpu.setBackground(bk)
-    gpu.setForeground(fk)
-end
-```
