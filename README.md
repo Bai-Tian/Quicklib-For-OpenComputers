@@ -9,7 +9,7 @@
 
 删除控件：  
 `qk_del(控件的id:number)`  
-删除此id的控件。例：qk_del(p)  
+删除此id的控件。  
 
 ## box控件
 `qk_new(包含初始化数据的表:table)`  
