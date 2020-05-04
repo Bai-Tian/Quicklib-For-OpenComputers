@@ -1,4 +1,4 @@
--- oc程序极速开发库0.5 by Bai_Tian
+-- oc程序极速开发库0.6 by Bai_Tian
 local component = require("component")
 local gpu = component.gpu
 local event = require("event")
@@ -31,7 +31,7 @@ function mt_box:draw() -- 绘制函数
             while t.pic[i][j] do
                 gpu.setBackground(t.pic[i][j][2])
                 gpu.setForeground(t.pic[i][j][3])
-                gpu.set(t.x+i-1,t.y+j-1, t.pic[i][j][1])
+                gpu.set(t.x+j-1,t.y+i-1, t.pic[i][j][1])
                 j=j+1
             end
             j=1
@@ -80,13 +80,16 @@ function qk_hide(id)
     qk_data[id].rf=0
 end
 
-local function event_timer()
+local function event_timer(x)
     for k, v in ipairs(qk_data) do
         if v.type~=nil and v.type ~= "n" and v.rf ~= 0 then
             --if v.type == "box" then
                 if v.rft <= 0 then
                     v:draw()
                     v.rft = v.rf
+                    return
+                elseif x then
+                    v:draw()
                     return
                 else
                     v.rft = v.rft - 0.1
@@ -99,6 +102,7 @@ end
 event.timer(0.1, event_timer, math.huge)
 
 local function screen(name, addr, x, y, button, player)
+    event_timer(1)
     for k, v in ipairs(qk_data) do
         if v.type ~= "n" then
             --if v.type == "box" then
