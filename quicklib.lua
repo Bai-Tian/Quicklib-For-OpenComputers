@@ -5,6 +5,8 @@ local event = require("event")
 local timer_id = 0
 qk_data = {}
 
+qk = {}
+
 local mt_box = {
     type = "box",
     x = 1,
@@ -51,7 +53,7 @@ function mt_box:draw() -- 绘制函数
     gpu.setForeground(fk)
 end
 
-function qk_new(t,mt)
+function qk.new(t,mt)
     if not mt and not t then
         t={}
         setmetatable(t, {__index = mt_box})
@@ -65,7 +67,7 @@ function qk_new(t,mt)
     return timer_id
 end
 
-function qk_del(id)
+function qk.del(id)
     if type(id)=="table" then
         local i=1
         while id[i] do
@@ -77,7 +79,7 @@ function qk_del(id)
     end
 end
 
-function qk_edit(id,t)
+function qk.edit(id,t)
     if t.x then qk_data[id].x=t.x end
     if t.y then qk_data[id].y=t.y end
     if t.dx then qk_data[id].dx=t.dx end
@@ -90,7 +92,7 @@ function qk_edit(id,t)
     if t.pic then qk_data[id].pic=t.pic end
 end
 
-function qk_hide(id)
+function qk.hide(id)
     qk_data[id].rf=0
 end
 
@@ -151,3 +153,5 @@ local function modem(_,_,senderAddress,port,distance,msg,...)
     end
 end
 event.listen("modem_message", modem)
+
+return qk
